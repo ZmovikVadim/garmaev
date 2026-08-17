@@ -1,6 +1,6 @@
 ---
 /**
- * Просмотр снимка во весь экран.
+ * Просмотр снимка во весь экран с перелистыванием влево-вправо.
  * Без JavaScript плитки остаются обычными ссылками на большое изображение,
  * так что галерея работает всегда.
  */
@@ -8,6 +8,12 @@
 
 <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Просмотр снимка">
   <button class="lightbox__close" type="button" aria-label="Закрыть">&times;</button>
+  <button class="lightbox__arrow lightbox__arrow--prev" type="button" aria-label="Предыдущий снимок">
+    &#8592;
+  </button>
+  <button class="lightbox__arrow lightbox__arrow--next" type="button" aria-label="Следующий снимок">
+    &#8594;
+  </button>
   <div>
     <img id="lightbox-img" src="" alt="" />
     <p class="lightbox__caption" id="lightbox-caption"></p>
@@ -18,16 +24,31 @@
   const box = document.getElementById('lightbox')
   const img = document.getElementById('lightbox-img')
   const caption = document.getElementById('lightbox-caption')
-  const closeBtn = box?.querySelector('.lightbox__close')
+  const closeBtn = box?.querySelector<HTMLButtonElement>('.lightbox__close')
+  const prevBtn = box?.querySelector<HTMLButtonElement>('.lightbox__arrow--prev')
+  const nextBtn = box?.querySelector<HTMLButtonElement>('.lightbox__arrow--next')
+  const links = [...document.querySelectorAll<HTMLAnchorElement>('.shot__link')]
 
-  if (box && img instanceof HTMLImageElement && caption) {
-    const open = (href: string, alt: string) => {
-      img.src = href
+  if (box && img instanceof HTMLImageElement && caption && prevBtn && nextBtn && links.length) {
+    let index = 0
+
+    const show = (i: number) => {
+      index = (i + links.length) % links.length
+      const link = links[index]
+      const alt = link.querySelector('img')?.alt ?? ''
+      img.src = link.href
       img.alt = alt
-      caption.textContent = alt
+      caption.textContent = `${alt ? alt + ' · ' : ''}${index + 1} из ${links.length}`
+      // Держим соответствующую плитку в поле зрения, чтобы после закрытия
+      // лента стояла на том же снимке.
+      link.closest('.shot')?.scrollIntoView({ block: 'nearest', inline: 'center' })
+    }
+
+    const open = (i: number) => {
+      show(i)
       box.setAttribute('open', '')
       document.body.style.overflow = 'hidden'
-      closeBtn instanceof HTMLElement && closeBtn.focus()
+      closeBtn?.focus()
     }
 
     const close = () => {
@@ -36,22 +57,44 @@
       img.src = ''
     }
 
-    document.querySelectorAll<HTMLAnchorElement>('.shot__link').forEach((link) => {
+    links.forEach((link, i) => {
       link.addEventListener('click', (event) => {
         event.preventDefault()
-        const thumb = link.querySelector('img')
-        open(link.href, thumb?.alt ?? '')
+        open(i)
       })
     })
 
+    prevBtn.addEventListener('click', (event) => {
+      event.stopPropagation()
+      show(index - 1)
+    })
+
+    nextBtn.addEventListener('click', (event) => {
+      event.stopPropagation()
+      show(index + 1)
+    })
+
     box.addEventListener('click', (event) => {
-      // Клик по самому снимку не закрывает — только по фону и кресту.
+      // Клик по самому снимку и по стрелкам не закрывает — только по фону и кресту.
       if (event.target === img) return
       close()
     })
 
     document.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape' && box.hasAttribute('open')) close()
+      if (!box.hasAttribute('open')) return
+      if (event.key === 'Escape') close()
+      if (event.key === 'ArrowLeft') show(index - 1)
+      if (event.key === 'ArrowRight') show(index + 1)
     })
+
+    // Свайп на телефоне.
+    let startX = 0
+    box.addEventListener('touchstart', (event) => {
+      startX = event.changedTouches[0].screenX
+    }, { passive: true })
+    box.addEventListener('touchend', (event) => {
+      const delta = event.changedTouches[0].screenX - startX
+      if (Math.abs(delta) > 50) show(delta > 0 ? index - 1 : index + 1)
+    }, { passive: true })
   }
 </script>

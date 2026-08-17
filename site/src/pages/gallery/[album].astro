@@ -28,24 +28,99 @@ const { album, prev, next } = Astro.props
       <p class="eyebrow">{album.period}</p>
       <h1>{album.title}</h1>
 
-      <div class="grid-photos">
-        {
-          album.photos.map((photo) => (
-            <figure class="shot">
-              <a class="shot__link" href={withBase(photo.src)}>
-                <img
-                  src={withBase(photo.thumb)}
-                  width={photo.width}
-                  height={photo.height}
-                  alt={photo.caption ?? `${album.title}. Ревомир Гармаев`}
-                  loading="lazy"
-                />
-              </a>
-              {photo.caption && <figcaption>{photo.caption}</figcaption>}
-            </figure>
-          ))
-        }
+      <div class="strip">
+        <div class="strip__head">
+          <span>
+            {album.photos.length}{' '}
+            {album.photos.length === 1
+              ? 'снимок'
+              : album.photos.length < 5
+                ? 'снимка'
+                : 'снимков'} · пролистайте вправо
+          </span>
+          <div class="strip__nav">
+            <button class="strip__btn" type="button" data-strip-prev aria-label="Предыдущие снимки">
+              ←
+            </button>
+            <button class="strip__btn" type="button" data-strip-next aria-label="Следующие снимки">
+              →
+            </button>
+          </div>
+        </div>
+
+        <div class="strip__rail" data-strip-rail tabindex="0" aria-label={`Снимки: ${album.title}`}>
+          {
+            album.photos.map((photo) => (
+              <figure class="shot">
+                <a class="shot__link" href={withBase(photo.src)}>
+                  <img
+                    src={withBase(photo.thumb)}
+                    width={photo.width}
+                    height={photo.height}
+                    alt={photo.caption ?? `${album.title}. Ревомир Гармаев`}
+                    loading="lazy"
+                  />
+                </a>
+                {photo.caption && <figcaption>{photo.caption}</figcaption>}
+              </figure>
+            ))
+          }
+        </div>
       </div>
+
+      <script>
+        const rail = document.querySelector<HTMLElement>('[data-strip-rail]')
+        const prev = document.querySelector<HTMLButtonElement>('[data-strip-prev]')
+        const next = document.querySelector<HTMLButtonElement>('[data-strip-next]')
+
+        if (rail && prev && next) {
+          const shots = [...rail.querySelectorAll<HTMLElement>('.shot')]
+
+          /** Смещение кадра внутри прокручиваемого содержимого. */
+          const offsetOf = (shot: HTMLElement) =>
+            shot.getBoundingClientRect().left - rail.getBoundingClientRect().left + rail.scrollLeft
+
+          /**
+           * Листаем по кадрам, а не на «примерно экран»: цель прокрутки должна
+           * совпадать с точкой привязки, иначе snap уводит её обратно.
+           */
+          const go = (direction: 1 | -1) => {
+            const current = rail.scrollLeft
+            const target =
+              direction > 0
+                ? shots.find((shot) => offsetOf(shot) > current + 4)
+                : [...shots].reverse().find((shot) => offsetOf(shot) < current - 4)
+
+            rail.scrollTo({
+              left: target ? offsetOf(target) : direction > 0 ? rail.scrollWidth : 0,
+            })
+          }
+
+          const sync = () => {
+            const max = rail.scrollWidth - rail.clientWidth
+            prev.disabled = rail.scrollLeft <= 2
+            next.disabled = rail.scrollLeft >= max - 2
+          }
+
+          prev.addEventListener('click', () => go(-1))
+          next.addEventListener('click', () => go(1))
+          rail.addEventListener('scroll', sync, { passive: true })
+          window.addEventListener('resize', sync)
+
+          rail.addEventListener('keydown', (event) => {
+            if (event.key === 'ArrowRight') {
+              event.preventDefault()
+              go(1)
+            }
+            if (event.key === 'ArrowLeft') {
+              event.preventDefault()
+              go(-1)
+            }
+          })
+
+          sync()
+        }
+      </script>
 
       <hr />
 

@@ -399,6 +399,99 @@ main {
   margin: 0;
 }
 
+/* ─── Лента снимков внутри альбома ───────────────────────────── */
+
+.strip {
+  margin-top: 2rem;
+}
+
+.strip__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  font: 0.875rem/1.5 var(--sans);
+  color: var(--muted);
+  margin-bottom: 0.9rem;
+}
+
+.strip__nav {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.strip__btn {
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 1px solid var(--rule);
+  background: var(--paper);
+  color: var(--ink-soft);
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.1rem;
+  line-height: 1;
+  display: grid;
+  place-items: center;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.strip__btn:hover:not(:disabled) {
+  background: var(--paper-sunk);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.strip__btn:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.strip__rail {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  /* proximity, а не mandatory: mandatory вместе со scroll-behavior: smooth
+     отменяет программную прокрутку, возвращая её к текущей точке привязки. */
+  scroll-snap-type: x proximity;
+  scroll-behavior: smooth;
+  padding-bottom: 1rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--rule) transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .strip__rail {
+    scroll-behavior: auto;
+  }
+}
+
+.strip__rail::-webkit-scrollbar {
+  height: 8px;
+}
+
+.strip__rail::-webkit-scrollbar-thumb {
+  background: var(--rule);
+  border-radius: 4px;
+}
+
+.strip__rail .shot {
+  flex: 0 0 auto;
+  max-width: min(88vw, 52rem);
+  scroll-snap-align: start;
+}
+
+.strip__rail .shot__link img {
+  height: clamp(16rem, 56vh, 32rem);
+  width: auto;
+  max-width: none;
+}
+
+.strip__rail figcaption {
+  max-width: 28rem;
+  text-align: left;
+}
+
 .grid-photos {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
@@ -480,6 +573,39 @@ main {
 
 .lightbox__close:hover {
   color: #fff;
+}
+
+.lightbox__arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+  width: 3rem;
+  height: 3rem;
+  border: 1px solid rgb(207 199 186 / 0.35);
+  border-radius: 50%;
+  background: rgb(24 21 18 / 0.5);
+  color: #cfc7ba;
+  font-size: 1.35rem;
+  line-height: 1;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.lightbox__arrow:hover {
+  background: rgb(24 21 18 / 0.85);
+  border-color: #cfc7ba;
+  color: #fff;
+}
+
+.lightbox__arrow--prev {
+  left: clamp(0.5rem, 2vw, 2rem);
+}
+
+.lightbox__arrow--next {
+  right: clamp(0.5rem, 2vw, 2rem);
 }
 
 /* ─── Список статей ──────────────────────────────────────────── */
