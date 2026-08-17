@@ -20,6 +20,10 @@ const path = Astro.url.pathname.replace(/\/+$/, '') || '/'
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
+    {/* Фавиконка перенесена с гармаев.рф. */}
+    <link rel="icon" type="image/png" sizes="32x32" href={withBase('/favicon-32.png')} />
+    <link rel="icon" type="image/png" sizes="512x512" href={withBase('/favicon.png')} />
+    <link rel="apple-touch-icon" href={withBase('/apple-touch-icon.png')} />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="profile" />
