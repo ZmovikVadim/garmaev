@@ -60,11 +60,11 @@ const path = Astro.url.pathname.replace(/\/+$/, '') || '/'
           <p><strong>{site.name}</strong>, {site.datesLine}.</p>
           <p>
             Сайт памяти. Если у вас сохранились фотографии, письма, публикации или просто
-            воспоминания о Ревомире Баяровиче — напишите, они займут своё место здесь.
+            воспоминания о Ревомире Баяровиче — они займут своё место здесь.
           </p>
           <p>
-            {site.contactName}:{' '}
-            <a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a>.
+            <a href={withBase('/contact')}>Написать нам</a> — сообщения приходят
+            {' '}{site.contactName}.
           </p>
         </div>
         <div>

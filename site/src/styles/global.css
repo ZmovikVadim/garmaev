@@ -718,6 +718,106 @@ main {
   margin-bottom: 0;
 }
 
+/* ─── Форма обратной связи ───────────────────────────────────── */
+
+.form {
+  margin-top: 2.5rem;
+  max-width: 40rem;
+}
+
+.form__row {
+  display: grid;
+  gap: 1rem;
+}
+
+@media (min-width: 34rem) {
+  .form__row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.form__field {
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.form__label {
+  display: block;
+  font: 0.875rem/1.5 var(--sans);
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  margin-bottom: 0.4rem;
+}
+
+.form__input {
+  width: 100%;
+  font: 1rem/1.6 var(--sans);
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  padding: 0.65rem 0.8rem;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.form__input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgb(140 95 60 / 0.12);
+}
+
+textarea.form__input {
+  resize: vertical;
+}
+
+/* Ловушка для роботов — вне потока и вне доступности. */
+.form__botcheck {
+  position: absolute;
+  left: -9999px;
+  opacity: 0;
+}
+
+.form__note {
+  font: 0.9375rem/1.6 var(--sans);
+  color: var(--muted);
+  margin: 0.25rem 0 1.5rem;
+}
+
+.form__submit {
+  font: 1rem/1 var(--sans);
+  background: var(--accent);
+  color: #fff;
+  border: 0;
+  border-radius: 2px;
+  padding: 0.85rem 2rem;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.form__submit:hover:not(:disabled) {
+  background: var(--accent-dark);
+}
+
+.form__submit:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+
+.form__status {
+  font: 0.9375rem/1.6 var(--sans);
+  margin: 1rem 0 0;
+  min-height: 1.6em;
+  color: var(--muted);
+}
+
+.form__status--ok {
+  color: var(--accent-dark);
+}
+
+.form__status--error {
+  color: #9a3412;
+}
+
 /* ─── Подвал ─────────────────────────────────────────────────── */
 
 .footer {

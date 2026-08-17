@@ -1,0 +1,112 @@
+---
+import Base from '../layouts/Base.astro'
+import site from '../data/site.json'
+---
+
+<Base
+  title="Написать нам"
+  description="Если у вас сохранились фотографии, письма, публикации или воспоминания о Ревомире Баяровиче Гармаеве — напишите нам."
+>
+  <div class="wrap">
+    <main>
+      <h1>Написать нам</h1>
+
+      <div class="prose">
+        <p class="lede">
+          Этот сайт будет пополняться. Если у вас сохранились фотографии, письма,
+          публикации или просто воспоминания о Ревомире Баяровиче — напишите, они займут
+          своё место здесь.
+        </p>
+        <p>
+          Особенно нужны: годы и места на снимках галереи, имена людей рядом с ним,
+          публикации в бурятоязычной прессе и бумажный экземпляр книги «Дорогие моему
+          сердцу имена» для сканирования.
+        </p>
+      </div>
+
+      {
+        site.formAccessKey ? (
+          <form class="form" id="contact-form" action="https://api.web3forms.com/submit" method="POST">
+            <input type="hidden" name="access_key" value={site.formAccessKey} />
+            <input type="hidden" name="subject" value="Сообщение с сайта памяти Р. Б. Гармаева" />
+            <input type="hidden" name="from_name" value="гармаев.рф" />
+            {/* Ловушка для роботов: живой человек это поле не увидит. */}
+            <input type="checkbox" name="botcheck" class="form__botcheck" tabindex="-1" />
+
+            <div class="form__row">
+              <label class="form__field">
+                <span class="form__label">Как вас зовут</span>
+                <input class="form__input" type="text" name="name" required autocomplete="name" />
+              </label>
+
+              <label class="form__field">
+                <span class="form__label">Почта для ответа</span>
+                <input class="form__input" type="email" name="email" required autocomplete="email" />
+              </label>
+            </div>
+
+            <label class="form__field">
+              <span class="form__label">Что вы хотите рассказать</span>
+              <textarea class="form__input" name="message" rows="7" required></textarea>
+            </label>
+
+            <p class="form__note">
+              Фотографии и файлы через форму не отправить. Напишите, что у вас есть, —
+              {site.contactName} ответит и подскажет, куда их прислать.
+            </p>
+
+            <button class="form__submit" type="submit">Отправить</button>
+
+            <p class="form__status" id="form-status" role="status" aria-live="polite"></p>
+          </form>
+        ) : (
+          <div class="note">
+            <p>
+              <strong>Форма настраивается.</strong> Чтобы она заработала, нужен ключ доступа
+              Web3Forms — он выдаётся бесплатно и без регистрации на
+              <a href="https://web3forms.com" rel="noopener external">web3forms.com</a>: вводите
+              адрес почты, ключ приходит письмом. Ключ вставляется в
+              <code>site/src/data/site.json</code> в поле <code>formAccessKey</code>.
+            </p>
+          </div>
+        )
+      }
+    </main>
+  </div>
+
+  <script>
+    const form = document.getElementById('contact-form')
+    const status = document.getElementById('form-status')
+
+    if (form instanceof HTMLFormElement && status) {
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault()
+        const button = form.querySelector('button[type="submit"]')
+
+        status.textContent = 'Отправляем…'
+        status.className = 'form__status'
+        if (button instanceof HTMLButtonElement) button.disabled = true
+
+        try {
+          const response = await fetch(form.action, {
+            method: 'POST',
+            headers: { Accept: 'application/json' },
+            body: new FormData(form),
+          })
+
+          if (!response.ok) throw new Error(String(response.status))
+
+          form.reset()
+          status.textContent = 'Спасибо. Письмо ушло — вам ответят.'
+          status.className = 'form__status form__status--ok'
+        } catch {
+          status.textContent =
+            'Не удалось отправить. Попробуйте ещё раз или напишите позже — возможно, пропала связь.'
+          status.className = 'form__status form__status--error'
+        } finally {
+          if (button instanceof HTMLButtonElement) button.disabled = false
+        }
+      })
+    }
+  </script>
+</Base>

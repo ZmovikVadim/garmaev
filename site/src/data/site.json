@@ -6,13 +6,15 @@
   "datesLine": "2 февраля 1938 — 12 сентября 2019",
   "tagline": "Журналист и редактор, государственный деятель, защитник бурятского языка, председатель республиканского совета ветеранов. Почётный гражданин Республики Бурятия.",
   "contactName": "Светлана Якупова",
-  "contactEmail": "yakupova.svetlana22@gmail.com",
+  "//formAccessKey": "Ключ Web3Forms. Пока пусто — на /contact вместо формы стоит пояснение. Адрес почты в разметку не попадает, письма уходят на него через Web3Forms.",
+  "formAccessKey": "",
   "nav": [
     { "href": "/", "label": "Главная" },
     { "href": "/biography", "label": "Биография" },
     { "href": "/gallery", "label": "Галерея" },
     { "href": "/quotes", "label": "Цитаты" },
     { "href": "/articles", "label": "Статьи" },
-    { "href": "/book", "label": "Книга" }
+    { "href": "/book", "label": "Книга" },
+    { "href": "/contact", "label": "Написать нам" }
   ]
 }
