@@ -1,0 +1,52 @@
+---
+import Base from '../../layouts/Base.astro'
+import gallery from '../../data/gallery.json'
+import { withBase } from '../../lib/url'
+
+const total = gallery.albums.reduce((n, a) => n + a.photos.length, 0)
+---
+
+<Base
+  title="Галерея"
+  description={`${total} фотографий из жизни Ревомира Баяровича Гармаева: комсомол, редакция «Буряад үнэн», государственная служба, поездки, семья.`}
+>
+  <div class="wrap">
+    <main>
+      <p class="eyebrow">{total} снимков · {gallery.albums.length} альбомов</p>
+      <h1>Галерея</h1>
+
+      <div class="prose">
+        <p class="lede">
+          Альбомы выстроены по линии жизни — от комсомольской юности до последних снимков.
+        </p>
+        <p class="card__note">
+          Даты приблизительные: в файлах сохранились даты сканирования, а не съёмки. Если
+          вы знаете год, место или людей на снимке — напишите нам, мы поставим подпись.
+        </p>
+      </div>
+
+      <div class="albums">
+        {
+          gallery.albums.map((album) => (
+            <a class="album" href={withBase(`/gallery/${album.slug}`)}>
+              <div class="album__cover">
+                <img
+                  src={withBase(album.photos[0].thumb)}
+                  width={album.photos[0].width}
+                  height={album.photos[0].height}
+                  alt=""
+                  loading="lazy"
+                />
+              </div>
+              <h2 class="album__title">{album.title}</h2>
+              <p class="album__meta">
+                {album.period} · {album.photos.length}{' '}
+                {album.photos.length === 1 ? 'снимок' : album.photos.length < 5 ? 'снимка' : 'снимков'}
+              </p>
+            </a>
+          ))
+        }
+      </div>
+    </main>
+  </div>
+</Base>

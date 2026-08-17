@@ -1,0 +1,79 @@
+---
+import site from '../data/site.json'
+import { withBase, isCurrent } from '../lib/url'
+import '../styles/global.css'
+
+interface Props {
+  title?: string
+  description?: string
+}
+
+const { title, description = site.tagline } = Astro.props
+const pageTitle = title ? `${title} — ${site.shortName}` : `${site.name}`
+const path = Astro.url.pathname.replace(/\/+$/, '') || '/'
+---
+
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="profile" />
+    <meta
+      property="og:image"
+      content={new URL(withBase('/gallery/poslednee-foto/01.jpg'), Astro.site)}
+    />
+    <link rel="canonical" href={new URL(path, Astro.site)} />
+  </head>
+  <body>
+    <header class="masthead">
+      <div class="wrap masthead__inner">
+        <a class="masthead__name" href={withBase('/')}>Ревомир Гармаев</a>
+        <nav class="nav" aria-label="Разделы сайта">
+          {
+            site.nav.map((item) => (
+              <a
+                href={withBase(item.href)}
+                aria-current={isCurrent(path, item.href) ? 'page' : undefined}
+              >
+                {item.label}
+              </a>
+            ))
+          }
+        </nav>
+      </div>
+    </header>
+
+    <slot />
+
+    <footer class="footer">
+      <div class="wrap footer__grid">
+        <div>
+          <p><strong>{site.name}</strong>, {site.datesLine}.</p>
+          <p>
+            Сайт памяти. Если у вас сохранились фотографии, письма, публикации или просто
+            воспоминания о Ревомире Баяровиче — напишите, они займут своё место здесь.
+          </p>
+          <p>
+            {site.contactName}:{' '}
+            <a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a>.
+          </p>
+        </div>
+        <div>
+          <p>
+            {site.nav.slice(1).map((item, i) => (
+              <>
+                {i > 0 && ' · '}
+                <a href={withBase(item.href)}>{item.label}</a>
+              </>
+            ))}
+          </p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

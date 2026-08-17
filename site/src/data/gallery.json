@@ -1,0 +1,556 @@
+{
+  "albums": [
+    {
+      "dir": "Комсомол",
+      "slug": "komsomol",
+      "title": "Комсомол",
+      "period": "1962–1970",
+      "photos": [
+        {
+          "src": "/gallery/komsomol/01.jpg",
+          "thumb": "/gallery/komsomol/01-thumb.jpg",
+          "width": 963,
+          "height": 764,
+          "caption": null,
+          "source": "Изображение 003.jpg"
+        },
+        {
+          "src": "/gallery/komsomol/02.jpg",
+          "thumb": "/gallery/komsomol/02-thumb.jpg",
+          "width": 1060,
+          "height": 540,
+          "caption": null,
+          "source": "Изображение 004.jpg"
+        },
+        {
+          "src": "/gallery/komsomol/03.jpg",
+          "thumb": "/gallery/komsomol/03-thumb.jpg",
+          "width": 1357,
+          "height": 744,
+          "caption": null,
+          "source": "Изображение 005.jpg"
+        },
+        {
+          "src": "/gallery/komsomol/04.jpg",
+          "thumb": "/gallery/komsomol/04-thumb.jpg",
+          "width": 1223,
+          "height": 847,
+          "caption": null,
+          "source": "Изображение 006.jpg"
+        },
+        {
+          "src": "/gallery/komsomol/05.jpg",
+          "thumb": "/gallery/komsomol/05-thumb.jpg",
+          "width": 1659,
+          "height": 1012,
+          "caption": null,
+          "source": "Изображение 007.jpg"
+        },
+        {
+          "src": "/gallery/komsomol/06.jpg",
+          "thumb": "/gallery/komsomol/06-thumb.jpg",
+          "width": 944,
+          "height": 720,
+          "caption": null,
+          "source": "Изображение 008.jpg"
+        },
+        {
+          "src": "/gallery/komsomol/07.jpg",
+          "thumb": "/gallery/komsomol/07-thumb.jpg",
+          "width": 1024,
+          "height": 640,
+          "caption": null,
+          "source": "Изображение 009.jpg"
+        },
+        {
+          "src": "/gallery/komsomol/08.jpg",
+          "thumb": "/gallery/komsomol/08-thumb.jpg",
+          "width": 664,
+          "height": 470,
+          "caption": null,
+          "source": "Изображение 010.jpg"
+        },
+        {
+          "src": "/gallery/komsomol/09.jpg",
+          "thumb": "/gallery/komsomol/09-thumb.jpg",
+          "width": 660,
+          "height": 480,
+          "caption": null,
+          "source": "Изображение 011.jpg"
+        },
+        {
+          "src": "/gallery/komsomol/10.jpg",
+          "thumb": "/gallery/komsomol/10-thumb.jpg",
+          "width": 1168,
+          "height": 784,
+          "caption": null,
+          "source": "Изображение 012.jpg"
+        },
+        {
+          "src": "/gallery/komsomol/11.jpg",
+          "thumb": "/gallery/komsomol/11-thumb.jpg",
+          "width": 1800,
+          "height": 1350,
+          "caption": "Оз. Байкал. Август 1968",
+          "source": "Оз. Байкал. Август 1968.JPG"
+        },
+        {
+          "src": "/gallery/komsomol/12.jpg",
+          "thumb": "/gallery/komsomol/12-thumb.jpg",
+          "width": 1350,
+          "height": 1800,
+          "caption": null,
+          "source": "DSCN0561.JPG"
+        },
+        {
+          "src": "/gallery/komsomol/13.jpg",
+          "thumb": "/gallery/komsomol/13-thumb.jpg",
+          "width": 1262,
+          "height": 1800,
+          "caption": null,
+          "source": "DSCN0588.JPG"
+        },
+        {
+          "src": "/gallery/komsomol/14.jpg",
+          "thumb": "/gallery/komsomol/14-thumb.jpg",
+          "width": 1325,
+          "height": 1800,
+          "caption": null,
+          "source": "DSCN0598.JPG"
+        },
+        {
+          "src": "/gallery/komsomol/15.jpg",
+          "thumb": "/gallery/komsomol/15-thumb.jpg",
+          "width": 1800,
+          "height": 1350,
+          "caption": null,
+          "source": "DSCN0610.JPG"
+        }
+      ]
+    },
+    {
+      "dir": "Работа",
+      "slug": "rabota",
+      "title": "Работа",
+      "period": "1970-е — 1990-е",
+      "photos": [
+        {
+          "src": "/gallery/rabota/01.jpg",
+          "thumb": "/gallery/rabota/01-thumb.jpg",
+          "width": 1350,
+          "height": 1800,
+          "caption": "12.12. 2008. Дети Бурятии - граждане России",
+          "source": "12.12. 2008. Дети Бурятии - граждане России.JPG"
+        },
+        {
+          "src": "/gallery/rabota/02.jpg",
+          "thumb": "/gallery/rabota/02-thumb.jpg",
+          "width": 1800,
+          "height": 1350,
+          "caption": "29 июля 1979, Ипподром, выставка-аукцион. четвертый слева товарищ Гармаев",
+          "source": "29 июля 1979, Ипподром, выставка-аукцион. )четвертый слева товарищ Гармаев))))).JPG"
+        },
+        {
+          "src": "/gallery/rabota/03.jpg",
+          "thumb": "/gallery/rabota/03-thumb.jpg",
+          "width": 1520,
+          "height": 992,
+          "caption": null,
+          "source": "Изображение 003.jpg"
+        },
+        {
+          "src": "/gallery/rabota/04.jpg",
+          "thumb": "/gallery/rabota/04-thumb.jpg",
+          "width": 893,
+          "height": 549,
+          "caption": null,
+          "source": "Изображение 006.jpg"
+        },
+        {
+          "src": "/gallery/rabota/05.jpg",
+          "thumb": "/gallery/rabota/05-thumb.jpg",
+          "width": 976,
+          "height": 960,
+          "caption": null,
+          "source": "Изображение 010.jpg"
+        },
+        {
+          "src": "/gallery/rabota/06.jpg",
+          "thumb": "/gallery/rabota/06-thumb.jpg",
+          "width": 1800,
+          "height": 1350,
+          "caption": null,
+          "source": "DSCN0555.JPG"
+        },
+        {
+          "src": "/gallery/rabota/07.jpg",
+          "thumb": "/gallery/rabota/07-thumb.jpg",
+          "width": 1308,
+          "height": 1800,
+          "caption": null,
+          "source": "DSCN0557.JPG"
+        },
+        {
+          "src": "/gallery/rabota/08.jpg",
+          "thumb": "/gallery/rabota/08-thumb.jpg",
+          "width": 1350,
+          "height": 1800,
+          "caption": null,
+          "source": "DSCN0566.JPG"
+        },
+        {
+          "src": "/gallery/rabota/09.jpg",
+          "thumb": "/gallery/rabota/09-thumb.jpg",
+          "width": 1800,
+          "height": 1350,
+          "caption": null,
+          "source": "DSCN0571.JPG"
+        },
+        {
+          "src": "/gallery/rabota/10.jpg",
+          "thumb": "/gallery/rabota/10-thumb.jpg",
+          "width": 1600,
+          "height": 1200,
+          "caption": null,
+          "source": "IMG_0469.JPG"
+        }
+      ]
+    },
+    {
+      "dir": "Работа 2",
+      "slug": "rabota-2",
+      "title": "Работа. Продолжение",
+      "period": "1990-е — 2000-е",
+      "photos": [
+        {
+          "src": "/gallery/rabota-2/01.jpg",
+          "thumb": "/gallery/rabota-2/01-thumb.jpg",
+          "width": 1424,
+          "height": 1120,
+          "caption": null,
+          "source": "Изображение 004.jpg"
+        },
+        {
+          "src": "/gallery/rabota-2/02.jpg",
+          "thumb": "/gallery/rabota-2/02-thumb.jpg",
+          "width": 1120,
+          "height": 1424,
+          "caption": null,
+          "source": "Изображение 006.jpg"
+        },
+        {
+          "src": "/gallery/rabota-2/03.jpg",
+          "thumb": "/gallery/rabota-2/03-thumb.jpg",
+          "width": 500,
+          "height": 773,
+          "caption": null,
+          "source": "Изображение 008.jpg"
+        },
+        {
+          "src": "/gallery/rabota-2/04.jpg",
+          "thumb": "/gallery/rabota-2/04-thumb.jpg",
+          "width": 1104,
+          "height": 768,
+          "caption": null,
+          "source": "Изображение 011.jpg"
+        },
+        {
+          "src": "/gallery/rabota-2/05.jpg",
+          "thumb": "/gallery/rabota-2/05-thumb.jpg",
+          "width": 1056,
+          "height": 607,
+          "caption": null,
+          "source": "Изображение 012.jpg"
+        },
+        {
+          "src": "/gallery/rabota-2/06.jpg",
+          "thumb": "/gallery/rabota-2/06-thumb.jpg",
+          "width": 1424,
+          "height": 944,
+          "caption": null,
+          "source": "Изображение 014.jpg"
+        },
+        {
+          "src": "/gallery/rabota-2/07.jpg",
+          "thumb": "/gallery/rabota-2/07-thumb.jpg",
+          "width": 1031,
+          "height": 682,
+          "caption": null,
+          "source": "Изображение 015.jpg"
+        },
+        {
+          "src": "/gallery/rabota-2/08.jpg",
+          "thumb": "/gallery/rabota-2/08-thumb.jpg",
+          "width": 752,
+          "height": 1024,
+          "caption": null,
+          "source": "Изображение 016.jpg"
+        },
+        {
+          "src": "/gallery/rabota-2/09.jpg",
+          "thumb": "/gallery/rabota-2/09-thumb.jpg",
+          "width": 944,
+          "height": 736,
+          "caption": null,
+          "source": "Изображение 017.jpg"
+        }
+      ]
+    },
+    {
+      "dir": "Япония",
+      "slug": "yaponiya",
+      "title": "Япония",
+      "period": "год уточняется",
+      "photos": [
+        {
+          "src": "/gallery/yaponiya/01.jpg",
+          "thumb": "/gallery/yaponiya/01-thumb.jpg",
+          "width": 704,
+          "height": 423,
+          "caption": null,
+          "source": "Изображение 004.jpg"
+        },
+        {
+          "src": "/gallery/yaponiya/02.jpg",
+          "thumb": "/gallery/yaponiya/02-thumb.jpg",
+          "width": 630,
+          "height": 473,
+          "caption": null,
+          "source": "Изображение 005.jpg"
+        },
+        {
+          "src": "/gallery/yaponiya/03.jpg",
+          "thumb": "/gallery/yaponiya/03-thumb.jpg",
+          "width": 672,
+          "height": 496,
+          "caption": null,
+          "source": "Изображение 006.jpg"
+        }
+      ]
+    },
+    {
+      "dir": "Далай лама",
+      "slug": "dalai-lama",
+      "title": "Далай-лама",
+      "period": "год уточняется",
+      "photos": [
+        {
+          "src": "/gallery/dalai-lama/01.jpg",
+          "thumb": "/gallery/dalai-lama/01-thumb.jpg",
+          "width": 744,
+          "height": 487,
+          "caption": null,
+          "source": "Изображение 003.jpg"
+        },
+        {
+          "src": "/gallery/dalai-lama/02.jpg",
+          "thumb": "/gallery/dalai-lama/02-thumb.jpg",
+          "width": 884,
+          "height": 1085,
+          "caption": null,
+          "source": "Изображение 004.jpg"
+        }
+      ]
+    },
+    {
+      "dir": "Дом ветеранов",
+      "slug": "dom-veteranov",
+      "title": "Дом ветеранов",
+      "period": "2005–2019",
+      "photos": [
+        {
+          "src": "/gallery/dom-veteranov/01.jpg",
+          "thumb": "/gallery/dom-veteranov/01-thumb.jpg",
+          "width": 622,
+          "height": 574,
+          "caption": null,
+          "source": "Копия Изображение 003.jpg"
+        },
+        {
+          "src": "/gallery/dom-veteranov/02.jpg",
+          "thumb": "/gallery/dom-veteranov/02-thumb.jpg",
+          "width": 754,
+          "height": 407,
+          "caption": null,
+          "source": "Копия Изображение 004.jpg"
+        },
+        {
+          "src": "/gallery/dom-veteranov/03.jpg",
+          "thumb": "/gallery/dom-veteranov/03-thumb.jpg",
+          "width": 688,
+          "height": 490,
+          "caption": null,
+          "source": "Копия Изображение 005.jpg"
+        },
+        {
+          "src": "/gallery/dom-veteranov/04.jpg",
+          "thumb": "/gallery/dom-veteranov/04-thumb.jpg",
+          "width": 887,
+          "height": 552,
+          "caption": null,
+          "source": "Копия Изображение 006.jpg"
+        }
+      ]
+    },
+    {
+      "dir": "Семья",
+      "slug": "semya",
+      "title": "Семья",
+      "period": "разные годы",
+      "photos": [
+        {
+          "src": "/gallery/semya/01.jpg",
+          "thumb": "/gallery/semya/01-thumb.jpg",
+          "width": 719,
+          "height": 960,
+          "caption": null,
+          "source": "_WWpZxBhTPg.jpg"
+        },
+        {
+          "src": "/gallery/semya/02.jpg",
+          "thumb": "/gallery/semya/02-thumb.jpg",
+          "width": 1380,
+          "height": 911,
+          "caption": null,
+          "source": "000000150019.tif"
+        },
+        {
+          "src": "/gallery/semya/03.jpg",
+          "thumb": "/gallery/semya/03-thumb.jpg",
+          "width": 1227,
+          "height": 818,
+          "caption": null,
+          "source": "000000230009.tif"
+        },
+        {
+          "src": "/gallery/semya/04.jpg",
+          "thumb": "/gallery/semya/04-thumb.jpg",
+          "width": 1600,
+          "height": 1200,
+          "caption": null,
+          "source": "����������� 700.jpg"
+        },
+        {
+          "src": "/gallery/semya/05.jpg",
+          "thumb": "/gallery/semya/05-thumb.jpg",
+          "width": 960,
+          "height": 719,
+          "caption": null,
+          "source": "dqV_f7EzvO4.jpg"
+        },
+        {
+          "src": "/gallery/semya/06.jpg",
+          "thumb": "/gallery/semya/06-thumb.jpg",
+          "width": 1341,
+          "height": 1800,
+          "caption": null,
+          "source": "DSCN0592.JPG"
+        },
+        {
+          "src": "/gallery/semya/07.jpg",
+          "thumb": "/gallery/semya/07-thumb.jpg",
+          "width": 1800,
+          "height": 1350,
+          "caption": null,
+          "source": "DSCN0600.JPG"
+        },
+        {
+          "src": "/gallery/semya/08.jpg",
+          "thumb": "/gallery/semya/08-thumb.jpg",
+          "width": 1800,
+          "height": 1265,
+          "caption": null,
+          "source": "DSCN0601.JPG"
+        },
+        {
+          "src": "/gallery/semya/09.jpg",
+          "thumb": "/gallery/semya/09-thumb.jpg",
+          "width": 1350,
+          "height": 1800,
+          "caption": null,
+          "source": "DSCN0637.JPG"
+        },
+        {
+          "src": "/gallery/semya/10.jpg",
+          "thumb": "/gallery/semya/10-thumb.jpg",
+          "width": 1600,
+          "height": 1200,
+          "caption": null,
+          "source": "IMG_0128.jpg"
+        },
+        {
+          "src": "/gallery/semya/11.jpg",
+          "thumb": "/gallery/semya/11-thumb.jpg",
+          "width": 1200,
+          "height": 1600,
+          "caption": null,
+          "source": "IMG_0200.jpg"
+        },
+        {
+          "src": "/gallery/semya/12.jpg",
+          "thumb": "/gallery/semya/12-thumb.jpg",
+          "width": 1600,
+          "height": 1200,
+          "caption": null,
+          "source": "IMG_0213.jpg"
+        },
+        {
+          "src": "/gallery/semya/13.jpg",
+          "thumb": "/gallery/semya/13-thumb.jpg",
+          "width": 1600,
+          "height": 1200,
+          "caption": null,
+          "source": "IMG_0215.jpg"
+        },
+        {
+          "src": "/gallery/semya/14.jpg",
+          "thumb": "/gallery/semya/14-thumb.jpg",
+          "width": 1600,
+          "height": 1160,
+          "caption": null,
+          "source": "IMG_0344.jpg"
+        },
+        {
+          "src": "/gallery/semya/15.jpg",
+          "thumb": "/gallery/semya/15-thumb.jpg",
+          "width": 1800,
+          "height": 1350,
+          "caption": null,
+          "source": "IMG_2783.JPG"
+        }
+      ]
+    },
+    {
+      "dir": "Последнее фото",
+      "slug": "poslednee-foto",
+      "title": "Последние снимки",
+      "period": "2010-е",
+      "photos": [
+        {
+          "src": "/gallery/poslednee-foto/01.jpg",
+          "thumb": "/gallery/poslednee-foto/01-thumb.jpg",
+          "width": 1205,
+          "height": 1800,
+          "caption": null,
+          "source": "Ревомир Баярович (1).JPG"
+        },
+        {
+          "src": "/gallery/poslednee-foto/02.jpg",
+          "thumb": "/gallery/poslednee-foto/02-thumb.jpg",
+          "width": 1205,
+          "height": 1800,
+          "caption": null,
+          "source": "Ревомир Баярович (2).JPG"
+        },
+        {
+          "src": "/gallery/poslednee-foto/03.jpg",
+          "thumb": "/gallery/poslednee-foto/03-thumb.jpg",
+          "width": 1205,
+          "height": 1800,
+          "caption": null,
+          "source": "Ревомир Баярович (3).JPG"
+        }
+      ]
+    }
+  ]
+}

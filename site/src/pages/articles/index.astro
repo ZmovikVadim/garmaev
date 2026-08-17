@@ -1,0 +1,67 @@
+---
+import Base from '../../layouts/Base.astro'
+import publications from '../../data/publications.json'
+import { getCollection } from 'astro:content'
+import { withBase } from '../../lib/url'
+
+const articles = (await getCollection('articles')).sort((a, b) => a.data.order - b.data.order)
+---
+
+<Base
+  title="Статьи"
+  description="Публикации о Ревомире Баяровиче Гармаеве: очерки коллег, материалы республиканской прессы, ссылки на источники."
+>
+  <div class="wrap">
+    <main>
+      <h1>Статьи</h1>
+
+      <div class="prose">
+        <p class="lede">Публикации о нём — очерки коллег и материалы республиканской прессы.</p>
+      </div>
+
+      <h2>Полные тексты на сайте</h2>
+      <ul class="entries">
+        {
+          articles.map((article) => (
+            <li class="entry">
+              <a class="entry__link" href={withBase(`/articles/${article.id}`)}>
+                <h3 class="entry__title">{article.data.title}</h3>
+                <p class="entry__meta">
+                  {[article.data.author, article.data.publication, article.data.dateNote]
+                    .filter(Boolean)
+                    .join(' · ')}
+                </p>
+                <p class="entry__dek">{article.data.dek}</p>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+
+      <h2>Публикации в сети</h2>
+      <ul class="entries">
+        {
+          publications.map((pub) => (
+            <li class="entry">
+              <a class="entry__link" href={pub.url} rel="noopener external">
+                <h3 class="entry__title">{pub.title}</h3>
+                <p class="entry__meta">
+                  {[pub.publication, pub.dateNote].filter(Boolean).join(' · ')}
+                </p>
+                <p class="entry__dek">{pub.dek}</p>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+
+      <div class="note">
+        <p>
+          Подборка неполная. Архив «Буряад үнэн» за годы его редакторства не переведён в
+          электронный вид, а часть публикаций о нём выходила на бурятском языке. Если вы
+          знаете материал, которого здесь нет — напишите нам.
+        </p>
+      </div>
+    </main>
+  </div>
+</Base>

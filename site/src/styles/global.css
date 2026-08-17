@@ -1,0 +1,637 @@
+/* Сайт памяти Р. Б. Гармаева.
+   Шрифты — только системные: сайт должен открываться быстро и без обращений
+   к зарубежным CDN. */
+
+:root {
+  --paper: #fbf9f5;
+  --paper-sunk: #f4f0e8;
+  --ink: #221f1c;
+  --ink-soft: #4a453e;
+  --muted: #6d665c;
+  --rule: #e0d9cd;
+  --accent: #8c5f3c;
+  --accent-dark: #6d4829;
+
+  --serif: 'PT Serif', 'Palatino Linotype', Palatino, Georgia, 'Times New Roman', serif;
+  --sans: 'PT Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+
+  --measure: 37rem;
+  --gap: clamp(1.5rem, 4vw, 3rem);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font: 1.0625rem/1.75 var(--serif);
+  text-rendering: optimizeLegibility;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  color: var(--accent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.15em;
+}
+
+a:hover {
+  color: var(--accent-dark);
+}
+
+h1,
+h2,
+h3 {
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: clamp(1.9rem, 5vw, 2.9rem);
+  margin: 0 0 0.6em;
+}
+
+h2 {
+  font-size: clamp(1.35rem, 3vw, 1.7rem);
+  margin: 2.5em 0 0.7em;
+}
+
+h3 {
+  font-size: 1.15rem;
+  margin: 2em 0 0.5em;
+}
+
+p {
+  margin: 0 0 1.15em;
+}
+
+/* Основной текст — выключка по ширине. Переносы обязательны: без них
+   justify на узкой колонке рвёт строки пробелами. lang="ru" в <html>
+   включает русский словарь переносов. */
+.prose p,
+.prose--wide p,
+.prose li,
+.note p {
+  text-align: justify;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+}
+
+/* Цитаты — по центру, без переносов: рваться они не должны. */
+blockquote {
+  margin: 2.5em auto;
+  padding: 0;
+  border: 0;
+  max-width: 30rem;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  font-style: normal;
+  color: var(--ink-soft);
+  text-align: center;
+  text-wrap: pretty;
+}
+
+blockquote::before {
+  content: '';
+  display: block;
+  width: 2rem;
+  height: 1px;
+  background: var(--accent);
+  margin: 0 auto 1.35rem;
+}
+
+blockquote p,
+blockquote cite {
+  text-align: center;
+  hyphens: none;
+  -webkit-hyphens: none;
+}
+
+blockquote p:last-of-type {
+  margin-bottom: 0;
+}
+
+blockquote cite {
+  display: block;
+  margin-top: 1.1rem;
+  font: 0.875rem/1.5 var(--sans);
+  letter-spacing: 0.06em;
+  font-style: normal;
+  color: var(--muted);
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--rule);
+  margin: 3rem 0;
+}
+
+/* ─── Каркас ─────────────────────────────────────────────────── */
+
+.wrap {
+  width: 100%;
+  max-width: 62rem;
+  margin-inline: auto;
+  padding-inline: var(--gap);
+}
+
+.prose {
+  max-width: var(--measure);
+}
+
+.prose--wide {
+  max-width: 44rem;
+}
+
+main {
+  padding-block: clamp(2rem, 6vw, 4rem) clamp(3rem, 8vw, 5rem);
+}
+
+/* ─── Шапка ──────────────────────────────────────────────────── */
+
+.masthead {
+  border-bottom: 1px solid var(--rule);
+  background: var(--paper);
+}
+
+.masthead__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.75rem var(--gap);
+  padding-block: 1.15rem;
+}
+
+.masthead__name {
+  font-family: var(--serif);
+  font-size: 1.0625rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--ink);
+  text-decoration: none;
+  margin-right: auto;
+}
+
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1.35rem;
+  font: 0.9375rem/1.4 var(--sans);
+}
+
+.nav a {
+  color: var(--ink-soft);
+  text-decoration: none;
+  padding-block: 0.15rem;
+  border-bottom: 1px solid transparent;
+}
+
+.nav a:hover {
+  color: var(--accent);
+  border-bottom-color: currentColor;
+}
+
+.nav a[aria-current='page'] {
+  color: var(--ink);
+  border-bottom-color: var(--accent);
+}
+
+/* ─── Первый экран ───────────────────────────────────────────── */
+
+.hero {
+  display: grid;
+  gap: clamp(1.75rem, 5vw, 3.5rem);
+  align-items: center;
+  padding-block: clamp(2.5rem, 7vw, 5rem);
+}
+
+@media (min-width: 46rem) {
+  .hero {
+    grid-template-columns: minmax(0, 17rem) minmax(0, 1fr);
+  }
+}
+
+.hero__portrait {
+  border-radius: 2px;
+  box-shadow: 0 1px 2px rgb(34 31 28 / 0.12), 0 12px 28px -12px rgb(34 31 28 / 0.28);
+}
+
+.hero__name {
+  font-size: clamp(2.1rem, 6.5vw, 3.4rem);
+  margin: 0 0 0.35em;
+}
+
+.hero__dates {
+  font: 0.9375rem/1.4 var(--sans);
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 1.4em;
+}
+
+.hero__lede {
+  font-size: 1.1875rem;
+  color: var(--ink-soft);
+  max-width: 32rem;
+  margin: 0;
+}
+
+/* ─── Цитата на всю ширину ───────────────────────────────────── */
+
+.pullquote {
+  background: var(--paper-sunk);
+  border-block: 1px solid var(--rule);
+  padding-block: clamp(2.5rem, 7vw, 4.5rem);
+}
+
+.pullquote blockquote {
+  margin: 0 auto;
+  padding: 0;
+  border: 0;
+  max-width: 40rem;
+  font-size: clamp(1.25rem, 3.2vw, 1.6rem);
+  line-height: 1.5;
+  font-style: normal;
+  color: var(--ink);
+  text-align: center;
+  text-wrap: pretty;
+}
+
+.pullquote cite {
+  display: block;
+  margin-top: 1.5rem;
+  font: 0.875rem/1.5 var(--sans);
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  font-style: normal;
+  color: var(--muted);
+}
+
+/* ─── Плитки разделов ────────────────────────────────────────── */
+
+.cards {
+  display: grid;
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  margin-block: clamp(2.5rem, 7vw, 4rem);
+}
+
+@media (min-width: 40rem) {
+  .cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 62rem) {
+  .cards--four {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.card {
+  background: var(--paper);
+  padding: 1.6rem 1.5rem 1.75rem;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  transition: background 0.15s;
+}
+
+.card:hover {
+  background: var(--paper-sunk);
+  color: inherit;
+}
+
+.card__title {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.card:hover .card__title {
+  color: var(--accent);
+}
+
+.card__note {
+  font: 0.9375rem/1.55 var(--sans);
+  color: var(--muted);
+  margin: 0;
+}
+
+/* ─── Галерея ────────────────────────────────────────────────── */
+
+.albums {
+  display: grid;
+  gap: clamp(1.5rem, 4vw, 2.25rem);
+  margin-top: 2.5rem;
+}
+
+@media (min-width: 34rem) {
+  .albums {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 56rem) {
+  .albums {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.album {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.album__cover {
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--paper-sunk);
+  border-radius: 2px;
+}
+
+.album__cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.album:hover .album__cover img {
+  transform: scale(1.03);
+}
+
+.album__title {
+  font-family: var(--serif);
+  font-size: 1.0625rem;
+  font-weight: 700;
+  margin: 0.85rem 0 0.15rem;
+}
+
+.album:hover .album__title {
+  color: var(--accent);
+}
+
+.album__meta {
+  font: 0.875rem/1.5 var(--sans);
+  color: var(--muted);
+  margin: 0;
+}
+
+.grid-photos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
+  gap: 1rem;
+  margin-top: 2.5rem;
+}
+
+.shot {
+  margin: 0;
+  display: block;
+}
+
+.shot__link {
+  display: block;
+  background: var(--paper-sunk);
+  border-radius: 2px;
+  overflow: hidden;
+  line-height: 0;
+}
+
+.shot__link img {
+  width: 100%;
+  transition: opacity 0.2s;
+}
+
+.shot__link:hover img {
+  opacity: 0.88;
+}
+
+.shot figcaption {
+  font: 0.8125rem/1.45 var(--sans);
+  color: var(--muted);
+  margin-top: 0.5rem;
+}
+
+/* ─── Просмотр снимка ────────────────────────────────────────── */
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: rgb(24 21 18 / 0.94);
+  display: none;
+  place-items: center;
+  padding: clamp(0.75rem, 3vw, 2.5rem);
+}
+
+.lightbox[open] {
+  display: grid;
+}
+
+.lightbox img {
+  max-width: 100%;
+  max-height: 82vh;
+  object-fit: contain;
+  margin-inline: auto;
+}
+
+.lightbox__caption {
+  color: #cfc7ba;
+  font: 0.9375rem/1.5 var(--sans);
+  text-align: center;
+  margin-top: 1rem;
+  min-height: 1.5em;
+}
+
+.lightbox__close {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.75rem;
+  background: none;
+  border: 0;
+  color: #cfc7ba;
+  font-size: 2.25rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+}
+
+.lightbox__close:hover {
+  color: #fff;
+}
+
+/* ─── Список статей ──────────────────────────────────────────── */
+
+.entries {
+  list-style: none;
+  padding: 0;
+  margin: 2.5rem 0 0;
+  border-top: 1px solid var(--rule);
+}
+
+.entry {
+  border-bottom: 1px solid var(--rule);
+}
+
+.entry__link {
+  display: block;
+  padding: 1.6rem 0;
+  text-decoration: none;
+  color: inherit;
+}
+
+.entry__link:hover {
+  color: inherit;
+}
+
+.entry__title {
+  font-family: var(--serif);
+  font-size: 1.3rem;
+  font-weight: 700;
+  line-height: 1.3;
+  margin: 0 0 0.35rem;
+}
+
+.entry__link:hover .entry__title {
+  color: var(--accent);
+}
+
+.entry__meta {
+  font: 0.875rem/1.5 var(--sans);
+  color: var(--muted);
+  margin: 0 0 0.6rem;
+}
+
+.entry__dek {
+  margin: 0;
+  color: var(--ink-soft);
+  max-width: var(--measure);
+}
+
+/* ─── Служебные ──────────────────────────────────────────────── */
+
+.eyebrow {
+  font: 0.875rem/1.5 var(--sans);
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 0.9rem;
+}
+
+.lede {
+  font-size: 1.1875rem;
+  color: var(--ink-soft);
+}
+
+.back {
+  font: 0.9375rem/1.5 var(--sans);
+  display: inline-block;
+  margin-bottom: 1.75rem;
+  text-decoration: none;
+}
+
+.back:hover {
+  text-decoration: underline;
+}
+
+.awards {
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem 0;
+  max-width: var(--measure);
+}
+
+.awards li {
+  padding: 0.6rem 0 0.6rem 1.5rem;
+  border-bottom: 1px solid var(--rule);
+  position: relative;
+}
+
+.awards li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 1.35em;
+  width: 0.5rem;
+  height: 1px;
+  background: var(--accent);
+}
+
+.note {
+  background: var(--paper-sunk);
+  border-left: 2px solid var(--accent);
+  padding: 1.25rem 1.5rem;
+  font: 1rem/1.65 var(--sans);
+  color: var(--ink-soft);
+  max-width: 40rem;
+  margin-block: 2rem;
+}
+
+.note p:last-child {
+  margin-bottom: 0;
+}
+
+/* ─── Подвал ─────────────────────────────────────────────────── */
+
+.footer {
+  border-top: 1px solid var(--rule);
+  background: var(--paper-sunk);
+  padding-block: clamp(2.25rem, 6vw, 3.25rem);
+  font: 0.9375rem/1.65 var(--sans);
+  color: var(--muted);
+}
+
+.footer__grid {
+  display: grid;
+  gap: 1.5rem var(--gap);
+}
+
+@media (min-width: 42rem) {
+  .footer__grid {
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  }
+}
+
+.footer p {
+  margin: 0 0 0.6em;
+  max-width: 34rem;
+}
+
+.footer a {
+  color: var(--accent-dark);
+}
+
+@media print {
+  .masthead,
+  .footer,
+  .lightbox {
+    display: none;
+  }
+
+  body {
+    background: #fff;
+    font-size: 11pt;
+  }
+}

@@ -1,0 +1,61 @@
+---
+import Base from '../../layouts/Base.astro'
+import Lightbox from '../../components/Lightbox.astro'
+import gallery from '../../data/gallery.json'
+import { withBase } from '../../lib/url'
+import type { GetStaticPaths } from 'astro'
+
+export const getStaticPaths = (() =>
+  gallery.albums.map((album, i) => ({
+    params: { album: album.slug },
+    props: {
+      album,
+      prev: gallery.albums[i - 1] ?? null,
+      next: gallery.albums[i + 1] ?? null,
+    },
+  }))) satisfies GetStaticPaths
+
+const { album, prev, next } = Astro.props
+---
+
+<Base
+  title={album.title}
+  description={`${album.title} (${album.period}) — ${album.photos.length} фотографий из жизни Ревомира Баяровича Гармаева.`}
+>
+  <div class="wrap">
+    <main>
+      <a class="back" href={withBase('/gallery')}>← Все альбомы</a>
+      <p class="eyebrow">{album.period}</p>
+      <h1>{album.title}</h1>
+
+      <div class="grid-photos">
+        {
+          album.photos.map((photo) => (
+            <figure class="shot">
+              <a class="shot__link" href={withBase(photo.src)}>
+                <img
+                  src={withBase(photo.thumb)}
+                  width={photo.width}
+                  height={photo.height}
+                  alt={photo.caption ?? `${album.title}. Ревомир Гармаев`}
+                  loading="lazy"
+                />
+              </a>
+              {photo.caption && <figcaption>{photo.caption}</figcaption>}
+            </figure>
+          ))
+        }
+      </div>
+
+      <hr />
+
+      <p class="album__meta">
+        {prev && <a href={withBase(`/gallery/${prev.slug}`)}>← {prev.title}</a>}
+        {prev && next && ' · '}
+        {next && <a href={withBase(`/gallery/${next.slug}`)}>{next.title} →</a>}
+      </p>
+    </main>
+  </div>
+
+  <Lightbox />
+</Base>

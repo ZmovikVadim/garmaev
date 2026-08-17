@@ -1,0 +1,93 @@
+---
+import Base from '../layouts/Base.astro'
+import site from '../data/site.json'
+import quotes from '../data/quotes.json'
+import gallery from '../data/gallery.json'
+import { withBase } from '../lib/url'
+
+const featured = quotes.find((q) => q.featured) ?? quotes[0]
+const photoCount = gallery.albums.reduce((n, a) => n + a.photos.length, 0)
+---
+
+<Base>
+  <div class="wrap">
+    <div class="hero">
+      <img
+        class="hero__portrait"
+        src={withBase('/gallery/poslednee-foto/01.jpg')}
+        width="1205"
+        height="1800"
+        alt="Ревомир Баярович Гармаев"
+      />
+      <div>
+        <h1 class="hero__name">Ревомир<br />Гармаев</h1>
+        <p class="hero__dates">{site.datesLine}</p>
+        <p class="hero__lede">{site.tagline}</p>
+      </div>
+    </div>
+  </div>
+
+  <section class="pullquote">
+    <div class="wrap">
+      <blockquote>
+        {featured.text}
+        <cite>{featured.source}</cite>
+      </blockquote>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <main>
+      <div class="prose">
+        <p class="lede">
+          Пятнадцать лет он был главным редактором «Буряад үнэн» — своего рода рекорд для
+          этой должности. Потом работал в Верховном Совете и правительстве республики,
+          возглавлял администрацию первого президента Бурятии. А последние четырнадцать
+          лет жизни руководил советом ветеранов и делал то, что считал главным: возвращал
+          имена.
+        </p>
+        <p>
+          Почти 17 тысяч имён фронтовиков в Книге Памяти Бурятии — в том числе его работа.
+        </p>
+      </div>
+
+      <nav class="cards cards--four" aria-label="Основные разделы">
+        <a class="card" href={withBase('/biography')}>
+          <span class="card__title">Биография</span>
+          <p class="card__note">
+            От отары чабанки в 1944 году до совета ветеранов республики. Должности, даты,
+            награды — и человек за ними.
+          </p>
+        </a>
+        <a class="card" href={withBase('/gallery')}>
+          <span class="card__title">Галерея</span>
+          <p class="card__note">
+            {photoCount} снимков в {gallery.albums.length} альбомах: комсомол, редакция,
+            работа, поездки, семья.
+          </p>
+        </a>
+        <a class="card" href={withBase('/quotes')}>
+          <span class="card__title">Цитаты</span>
+          <p class="card__note">
+            Его слова — из воспоминаний, выступлений и разговоров с коллегами.
+          </p>
+        </a>
+        <a class="card" href={withBase('/articles')}>
+          <span class="card__title">Статьи</span>
+          <p class="card__note">
+            Публикации о нём: очерки коллег и материалы республиканской прессы.
+          </p>
+        </a>
+      </nav>
+
+      <div class="prose">
+        <h2>Книга</h2>
+        <p>
+          В 2013 году вышла его книга <a href={withBase('/book')}>«Дорогие моему сердцу имена»</a> —
+          статьи, очерки, эссе и воспоминания, написанные в разные годы, на бурятском и
+          русском языках. История республики в судьбах конкретных людей.
+        </p>
+      </div>
+    </main>
+  </div>
+</Base>

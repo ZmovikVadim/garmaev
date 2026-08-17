@@ -1,0 +1,57 @@
+---
+/**
+ * Просмотр снимка во весь экран.
+ * Без JavaScript плитки остаются обычными ссылками на большое изображение,
+ * так что галерея работает всегда.
+ */
+---
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Просмотр снимка">
+  <button class="lightbox__close" type="button" aria-label="Закрыть">&times;</button>
+  <div>
+    <img id="lightbox-img" src="" alt="" />
+    <p class="lightbox__caption" id="lightbox-caption"></p>
+  </div>
+</div>
+
+<script>
+  const box = document.getElementById('lightbox')
+  const img = document.getElementById('lightbox-img')
+  const caption = document.getElementById('lightbox-caption')
+  const closeBtn = box?.querySelector('.lightbox__close')
+
+  if (box && img instanceof HTMLImageElement && caption) {
+    const open = (href: string, alt: string) => {
+      img.src = href
+      img.alt = alt
+      caption.textContent = alt
+      box.setAttribute('open', '')
+      document.body.style.overflow = 'hidden'
+      closeBtn instanceof HTMLElement && closeBtn.focus()
+    }
+
+    const close = () => {
+      box.removeAttribute('open')
+      document.body.style.overflow = ''
+      img.src = ''
+    }
+
+    document.querySelectorAll<HTMLAnchorElement>('.shot__link').forEach((link) => {
+      link.addEventListener('click', (event) => {
+        event.preventDefault()
+        const thumb = link.querySelector('img')
+        open(link.href, thumb?.alt ?? '')
+      })
+    })
+
+    box.addEventListener('click', (event) => {
+      // Клик по самому снимку не закрывает — только по фону и кресту.
+      if (event.target === img) return
+      close()
+    })
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && box.hasAttribute('open')) close()
+    })
+  }
+</script>

@@ -1,0 +1,46 @@
+---
+import Base from '../../layouts/Base.astro'
+import { getCollection, render } from 'astro:content'
+import { withBase } from '../../lib/url'
+import type { GetStaticPaths } from 'astro'
+
+export const getStaticPaths = (async () => {
+  const articles = await getCollection('articles')
+  return articles.map((article) => ({
+    params: { slug: article.id },
+    props: { article },
+  }))
+}) satisfies GetStaticPaths
+
+const { article } = Astro.props
+const { Content } = await render(article)
+const meta = [article.data.author, article.data.publication, article.data.dateNote]
+  .filter(Boolean)
+  .join(' · ')
+---
+
+<Base title={article.data.title} description={article.data.dek}>
+  <div class="wrap">
+    <main>
+      <a class="back" href={withBase('/articles')}>← Все статьи</a>
+      {meta && <p class="eyebrow">{meta}</p>}
+      <h1>{article.data.title}</h1>
+
+      <article class="prose">
+        <p class="lede">{article.data.dek}</p>
+        <hr />
+        <Content />
+        {
+          article.data.sourceUrl && (
+            <>
+              <hr />
+              <p class="card__note">
+                Источник: <a href={article.data.sourceUrl} rel="noopener external">{article.data.publication ?? article.data.sourceUrl}</a>
+              </p>
+            </>
+          )
+        }
+      </article>
+    </main>
+  </div>
+</Base>

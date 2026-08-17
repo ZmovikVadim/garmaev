@@ -1,0 +1,53 @@
+---
+import Base from '../layouts/Base.astro'
+import quotes from '../data/quotes.json'
+
+const featured = quotes.find((q) => q.featured) ?? quotes[0]
+const rest = quotes.filter((q) => q !== featured)
+---
+
+<Base
+  title="Цитаты"
+  description="Слова Ревомира Баяровича Гармаева — из воспоминаний, выступлений и разговоров с коллегами."
+>
+  <div class="wrap">
+    <main>
+      <h1>Цитаты</h1>
+      <div class="prose">
+        <p class="lede">Его собственные слова — из воспоминаний, выступлений и разговоров.</p>
+      </div>
+    </main>
+  </div>
+
+  <section class="pullquote">
+    <div class="wrap">
+      <blockquote>
+        {featured.text}
+        <cite>{featured.source}</cite>
+      </blockquote>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <main>
+      <div class="prose--wide">
+        {
+          rest.map((quote) => (
+            <blockquote>
+              <p>{quote.text}</p>
+              <cite>{quote.source}</cite>
+            </blockquote>
+          ))
+        }
+      </div>
+
+      <div class="note">
+        <p>
+          Он писал всю жизнь — передовицы, очерки, эссе, воспоминания. Большая часть этих
+          текстов осталась в подшивках «Буряад үнэн» за 1976–1990 годы и в его книге. По
+          мере их расшифровки раздел будет расти.
+        </p>
+      </div>
+    </main>
+  </div>
+</Base>
