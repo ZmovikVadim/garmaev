@@ -39,7 +39,9 @@ cd site && npm run build
 - `index.html`, папки `biography`, `gallery`, `quotes`, `articles`, `contact`
 - `404.html` — страница «такой страницы нет»
 - `robots.txt`, `sitemap-index.xml`, `sitemap-0.xml`
-- `.htaccess` — правила Apache: https, без www, кэширование, обработка 404
+- `.htaccess` — правила Apache: https, без www, кэширование, обработка 404. **Файл
+  скрытый**: в Finder показывается по `Cmd`+`Shift`+точка, в терминале — через
+  `ls -la site/dist`
 - `_astro` — стили и скрипты
 - `gallery` — 60 снимков в трёх размерах, около 11 МБ
 
