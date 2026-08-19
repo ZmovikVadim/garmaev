@@ -12,15 +12,26 @@ ErrorDocument 404 /404.html
 <IfModule mod_rewrite.c>
   RewriteEngine On
 
-  # Только https. Вторая проверка — для случая, когда сертификат
-  # обрывается на балансировщике и до Apache доходит http.
-  RewriteCond %{HTTPS} !=on
-  RewriteCond %{HTTP:X-Forwarded-Proto} !https
-  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+  # ВНИМАНИЕ: блок принудительного https выключен намеренно.
+  #
+  # Включайте его ТОЛЬКО после того, как для домена выпущен сертификат
+  # Let's Encrypt. Пока на хостинге стоит самоподписанный сертификат-заглушка,
+  # принудительный https означает предупреждение браузера о недоверенном
+  # сертификате у каждого посетителя.
+  #
+  # Как включить: уберите знаки # с трёх строк ниже и залейте файл заново.
+  # Или включите перенаправление на https в панели Reg.ru — тогда правило
+  # здесь не нужно вовсе.
+  #
+  # RewriteCond %{HTTPS} !=on
+  # RewriteCond %{HTTP:X-Forwarded-Proto} !https
+  # RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 
-  # Один канонический адрес: без www.
+  # Один канонический адрес: без www. Схема сохраняется через REQUEST_SCHEME,
+  # чтобы до выпуска Let's Encrypt не отправлять посетителя на https
+  # с самоподписанным сертификатом.
   RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
-  RewriteRule ^ https://%1%{REQUEST_URI} [R=301,L]
+  RewriteRule ^ %{REQUEST_SCHEME}://%1%{REQUEST_URI} [R=301,L]
 </IfModule>
 
 <IfModule mod_deflate.c>
