@@ -16,6 +16,8 @@ export const getStaticPaths = (() =>
   }))) satisfies GetStaticPaths
 
 const { album, prev, next } = Astro.props
+
+const plural = (n: number) => (n === 1 ? 'снимок' : n < 5 ? 'снимка' : 'снимков')
 ---
 
 <Base
@@ -30,19 +32,12 @@ const { album, prev, next } = Astro.props
 
       <div class="strip">
         <div class="strip__head">
-          <span>
-            {album.photos.length}{' '}
-            {album.photos.length === 1
-              ? 'снимок'
-              : album.photos.length < 5
-                ? 'снимка'
-                : 'снимков'} · пролистайте вправо
-          </span>
+          <span>{album.photos.length} {plural(album.photos.length)} · выберите снимок ниже</span>
           <div class="strip__nav">
-            <button class="strip__btn" type="button" data-strip-prev aria-label="Предыдущие снимки">
+            <button class="strip__btn" type="button" data-strip-prev aria-label="Предыдущий снимок">
               ←
             </button>
-            <button class="strip__btn" type="button" data-strip-next aria-label="Следующие снимки">
+            <button class="strip__btn" type="button" data-strip-next aria-label="Следующий снимок">
               →
             </button>
           </div>
@@ -66,61 +61,22 @@ const { album, prev, next } = Astro.props
             ))
           }
         </div>
+
+        <nav class="icons" data-icons aria-label="Все снимки альбома">
+          {
+            album.photos.map((photo, i) => (
+              <a
+                class="icons__item"
+                href={withBase(photo.src)}
+                data-icon-index={i}
+                aria-label={`Снимок ${i + 1} из ${album.photos.length}${photo.caption ? ': ' + photo.caption : ''}`}
+              >
+                <img src={withBase(photo.icon)} width="200" height="200" alt="" loading="lazy" />
+              </a>
+            ))
+          }
+        </nav>
       </div>
-
-      <script>
-        const rail = document.querySelector<HTMLElement>('[data-strip-rail]')
-        const prev = document.querySelector<HTMLButtonElement>('[data-strip-prev]')
-        const next = document.querySelector<HTMLButtonElement>('[data-strip-next]')
-
-        if (rail && prev && next) {
-          const shots = [...rail.querySelectorAll<HTMLElement>('.shot')]
-
-          /** Смещение кадра внутри прокручиваемого содержимого. */
-          const offsetOf = (shot: HTMLElement) =>
-            shot.getBoundingClientRect().left - rail.getBoundingClientRect().left + rail.scrollLeft
-
-          /**
-           * Листаем по кадрам, а не на «примерно экран»: цель прокрутки должна
-           * совпадать с точкой привязки, иначе snap уводит её обратно.
-           */
-          const go = (direction: 1 | -1) => {
-            const current = rail.scrollLeft
-            const target =
-              direction > 0
-                ? shots.find((shot) => offsetOf(shot) > current + 4)
-                : [...shots].reverse().find((shot) => offsetOf(shot) < current - 4)
-
-            rail.scrollTo({
-              left: target ? offsetOf(target) : direction > 0 ? rail.scrollWidth : 0,
-            })
-          }
-
-          const sync = () => {
-            const max = rail.scrollWidth - rail.clientWidth
-            prev.disabled = rail.scrollLeft <= 2
-            next.disabled = rail.scrollLeft >= max - 2
-          }
-
-          prev.addEventListener('click', () => go(-1))
-          next.addEventListener('click', () => go(1))
-          rail.addEventListener('scroll', sync, { passive: true })
-          window.addEventListener('resize', sync)
-
-          rail.addEventListener('keydown', (event) => {
-            if (event.key === 'ArrowRight') {
-              event.preventDefault()
-              go(1)
-            }
-            if (event.key === 'ArrowLeft') {
-              event.preventDefault()
-              go(-1)
-            }
-          })
-
-          sync()
-        }
-      </script>
 
       <hr />
 
@@ -133,4 +89,93 @@ const { album, prev, next } = Astro.props
   </div>
 
   <Lightbox />
+
+  <script>
+    const rail = document.querySelector<HTMLElement>('[data-strip-rail]')
+    const prevBtn = document.querySelector<HTMLButtonElement>('[data-strip-prev]')
+    const nextBtn = document.querySelector<HTMLButtonElement>('[data-strip-next]')
+    const icons = [...document.querySelectorAll<HTMLAnchorElement>('[data-icon-index]')]
+
+    if (rail && prevBtn && nextBtn) {
+      const shots = [...rail.querySelectorAll<HTMLElement>('.shot')]
+
+      /** Смещение кадра внутри прокручиваемого содержимого. */
+      const offsetOf = (shot: HTMLElement) =>
+        shot.getBoundingClientRect().left - rail.getBoundingClientRect().left + rail.scrollLeft
+
+      const goTo = (index: number) => {
+        const shot = shots[Math.max(0, Math.min(index, shots.length - 1))]
+        if (shot) rail.scrollTo({ left: offsetOf(shot) })
+      }
+
+      /** Кадр, стоящий сейчас в начале видимой области. */
+      const currentIndex = () => {
+        const left = rail.scrollLeft
+        let best = 0
+        let bestDistance = Infinity
+        shots.forEach((shot, i) => {
+          const distance = Math.abs(offsetOf(shot) - left)
+          if (distance < bestDistance) {
+            bestDistance = distance
+            best = i
+          }
+        })
+        return best
+      }
+
+      /**
+       * Листаем по кадрам, а не на «примерно экран»: цель прокрутки должна
+       * совпадать с точкой привязки, иначе snap уводит её обратно.
+       */
+      const step = (direction: 1 | -1) => {
+        const left = rail.scrollLeft
+        const target =
+          direction > 0
+            ? shots.find((shot) => offsetOf(shot) > left + 4)
+            : [...shots].reverse().find((shot) => offsetOf(shot) < left - 4)
+
+        rail.scrollTo({ left: target ? offsetOf(target) : direction > 0 ? rail.scrollWidth : 0 })
+      }
+
+      const sync = () => {
+        const max = rail.scrollWidth - rail.clientWidth
+        prevBtn.disabled = rail.scrollLeft <= 2
+        nextBtn.disabled = rail.scrollLeft >= max - 2
+
+        const active = currentIndex()
+        icons.forEach((icon, i) => {
+          const isActive = i === active
+          icon.classList.toggle('icons__item--active', isActive)
+          if (isActive) icon.setAttribute('aria-current', 'true')
+          else icon.removeAttribute('aria-current')
+        })
+      }
+
+      prevBtn.addEventListener('click', () => step(-1))
+      nextBtn.addEventListener('click', () => step(1))
+      rail.addEventListener('scroll', sync, { passive: true })
+      window.addEventListener('resize', sync)
+
+      rail.addEventListener('keydown', (event) => {
+        if (event.key === 'ArrowRight') {
+          event.preventDefault()
+          step(1)
+        }
+        if (event.key === 'ArrowLeft') {
+          event.preventDefault()
+          step(-1)
+        }
+      })
+
+      icons.forEach((icon) => {
+        icon.addEventListener('click', (event) => {
+          // Без JavaScript пиктограмма остаётся ссылкой на полный снимок.
+          event.preventDefault()
+          goTo(Number(icon.dataset.iconIndex))
+        })
+      })
+
+      sync()
+    }
+  </script>
 </Base>

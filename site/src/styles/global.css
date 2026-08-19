@@ -492,6 +492,44 @@ main {
   text-align: left;
 }
 
+/* Ряд пиктограмм: все снимки альбома видны сразу и выбираются кликом. */
+
+.icons {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(3.5rem, 1fr));
+  gap: 0.5rem;
+  margin-top: 1.25rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--rule);
+}
+
+.icons__item {
+  display: block;
+  line-height: 0;
+  border-radius: 2px;
+  overflow: hidden;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  transition: outline-color 0.15s, opacity 0.15s;
+  opacity: 0.55;
+}
+
+.icons__item:hover,
+.icons__item:focus-visible {
+  opacity: 1;
+}
+
+.icons__item--active {
+  opacity: 1;
+  outline-color: var(--accent);
+}
+
+.icons__item img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+
 .grid-photos {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));

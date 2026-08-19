@@ -15,7 +15,7 @@
     &#8594;
   </button>
   <div>
-    <img id="lightbox-img" src="" alt="" />
+    <img id="lightbox-img" alt="" />
     <p class="lightbox__caption" id="lightbox-caption"></p>
   </div>
 </div>
@@ -54,7 +54,7 @@
     const close = () => {
       box.removeAttribute('open')
       document.body.style.overflow = ''
-      img.src = ''
+      img.removeAttribute('src')
     }
 
     links.forEach((link, i) => {

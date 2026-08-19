@@ -3,7 +3,8 @@
  *
  * Исходники не трогаются. На выходе:
  *   public/gallery/<album>/<n>.jpg       — большая версия, до 1800px
- *   public/gallery/<album>/<n>-thumb.jpg — превью, до 700px
+ *   public/gallery/<album>/<n>-thumb.jpg — превью для ленты, до 700px
+ *   public/gallery/<album>/<n>-icon.jpg  — пиктограмма для выбора, до 200px
  *   src/data/gallery.json                — манифест: альбомы, порядок, размеры
  *
  * Порядок альбомов и периоды заданы вручную в ALBUMS: метаданные снимков
@@ -32,6 +33,7 @@ const ALBUMS = [
 
 const FULL = 1800
 const THUMB = 700
+const ICON = 200
 
 /** Имя файла потеряло кодировку: 11 символов U+FFFD + " 700" = «Изображение 700». */
 const fixName = (name) => name.replace(/�+/g, 'Изображение')
@@ -54,6 +56,13 @@ function captionFrom(name) {
 
 const IMAGE_EXT = new Set(['.jpg', '.jpeg', '.png', '.tif', '.tiff', '.webp', '.avif'])
 
+/**
+ * Снимки, которые не публикуются. Оригиналы остаются в Photos/ — здесь только
+ * исключение из сборки, чтобы решение можно было отменить.
+ * Ключ — «папка/имя файла».
+ */
+const EXCLUDE = new Set(['Работа/Изображение 006.jpg'])
+
 async function processAlbum(album) {
   const srcDir = join(SRC, album.dir)
   const outDir = join(OUT, album.slug)
@@ -61,6 +70,7 @@ async function processAlbum(album) {
 
   const names = (await readdir(srcDir))
     .filter((n) => IMAGE_EXT.has(extname(n).toLowerCase()))
+    .filter((n) => !EXCLUDE.has(`${album.dir}/${n}`))
     .sort((a, b) => fixName(a).localeCompare(fixName(b), 'ru', { numeric: true }))
 
   const photos = []
@@ -73,6 +83,7 @@ async function processAlbum(album) {
 
     const full = `${id}.jpg`
     const thumb = `${id}-thumb.jpg`
+    const icon = `${id}-icon.jpg`
 
     const meta = await input
       .clone()
@@ -86,9 +97,17 @@ async function processAlbum(album) {
       .jpeg({ quality: 78, mozjpeg: true })
       .toFile(join(outDir, thumb))
 
+    // Пиктограмма кадрируется в квадрат: ряд выбора должен быть ровным.
+    await input
+      .clone()
+      .resize({ width: ICON, height: ICON, fit: 'cover', position: 'centre' })
+      .jpeg({ quality: 72, mozjpeg: true })
+      .toFile(join(outDir, icon))
+
     photos.push({
       src: `/gallery/${album.slug}/${full}`,
       thumb: `/gallery/${album.slug}/${thumb}`,
+      icon: `/gallery/${album.slug}/${icon}`,
       width: meta.width,
       height: meta.height,
       caption: captionFrom(name),
