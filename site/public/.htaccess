@@ -9,6 +9,18 @@
 AddDefaultCharset UTF-8
 ErrorDocument 404 /404.html
 
+# Файл состояния FTP-синхронизации GitHub Actions лежит в корне сайта и
+# перечисляет все файлы — наружу его отдавать незачем.
+<Files ".ftp-deploy-sync-state.json">
+  <IfModule mod_authz_core.c>
+    Require all denied
+  </IfModule>
+  <IfModule !mod_authz_core.c>
+    Order allow,deny
+    Deny from all
+  </IfModule>
+</Files>
+
 <IfModule mod_rewrite.c>
   RewriteEngine On
 

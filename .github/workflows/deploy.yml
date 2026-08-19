@@ -1,0 +1,78 @@
+name: Публикация на гармаев.рф
+
+# Каждый push в main пересобирает сайт и синхронизирует его с прод-хостингом.
+# Сборка идёт первой: если она падает, до заливки дело не доходит и на проде
+# остаётся предыдущая рабочая версия.
+#
+# Нужны три секрета репозитория (Settings → Secrets and variables → Actions):
+#   FTP_SERVER    — адрес FTP-сервера из панели Reg.ru
+#   FTP_USERNAME  — FTP-логин
+#   FTP_PASSWORD  — FTP-пароль
+#
+# Пока секреты не заданы, шаг заливки пропускается, и workflow просто проверяет,
+# что сайт собирается.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-prod
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: site/package-lock.json
+
+      - name: Установить зависимости
+        working-directory: site
+        run: npm ci
+
+      - name: Собрать сайт для гармаев.рф
+        working-directory: site
+        run: npm run build
+
+      - name: Проверить, что сборка целая
+        working-directory: site
+        run: |
+          set -e
+          test -f dist/index.html
+          test -f dist/404.html
+          test -f dist/.htaccess
+          test -f dist/robots.txt
+          test -d dist/gallery
+          echo "файлов в сборке: $(find dist -type f | wc -l)"
+
+      - name: Есть ли доступы к хостингу
+        id: creds
+        run: |
+          if [ -n "${{ secrets.FTP_SERVER }}" ]; then
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+            echo "::warning::Секреты FTP не заданы — заливка пропущена, собрана только проверка."
+          fi
+
+      - name: Залить на хостинг
+        if: steps.creds.outputs.ready == 'true'
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          # Если хостинг не принимает FTPS, поменяйте на ftp.
+          protocol: ftps
+          local-dir: ./site/dist/
+          server-dir: /www/xn--80aagbm4b1a.xn--p1ai/
+          # Файл состояния остаётся на сервере и позволяет заливать только
+          # изменившееся. Доступ к нему закрыт правилом в .htaccess.
+          state-name: .ftp-deploy-sync-state.json

@@ -40,7 +40,11 @@ npm install
 npm run photos   # пересобрать галерею из ../Photos (нужно после правки альбомов)
 npm run dev      # http://localhost:4321
 npm run build    # результат в site/dist — это и заливается на хостинг
+npm run deploy   # собрать и залить на прод по FTP (нужен .env.deploy, см. DEPLOY.md)
 ```
+
+Обычно заливать вручную не нужно: push в `main` собирает сайт и публикует его на
+гармаев.рф через GitHub Actions.
 
 `npm run photos` очищает `public/gallery` и собирает её заново: делает три размера
 каждого снимка — 1800px для полного просмотра, 700px для ленты и 200px квадратом
