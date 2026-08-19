@@ -14,7 +14,6 @@
     { "href": "/gallery", "label": "Галерея" },
     { "href": "/quotes", "label": "Цитаты" },
     { "href": "/articles", "label": "Статьи" },
-    { "href": "/book", "label": "Книга" },
     { "href": "/contact", "label": "Написать нам" }
   ]
 }

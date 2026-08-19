@@ -1,4 +1,12 @@
 ---
+/**
+ * СТРАНИЦА СКРЫТА. Подчёркивание в имени файла говорит Astro не собирать её,
+ * поэтому адреса /book на сайте нет и в карту сайта он не попадает.
+ *
+ * Чтобы вернуть: переименуйте файл в book.astro, добавьте пункт
+ * { "href": "/book", "label": "Книга" } в nav в src/data/site.json и верните
+ * ссылки на неё в index.astro и biography.astro.
+ */
 import Base from '../layouts/Base.astro'
 import site from '../data/site.json'
 import { withBase } from '../lib/url'

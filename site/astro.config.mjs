@@ -1,4 +1,5 @@
 import { defineConfig } from 'astro/config'
+import sitemap from '@astrojs/sitemap'
 
 /**
  * На Timeweb сайт живёт в корне домена, на GitHub Pages — в подпапке /garmaev.
@@ -17,6 +18,7 @@ export default defineConfig({
   site,
   base,
   trailingSlash: 'ignore',
+  integrations: [sitemap()],
   build: {
     // /biography/index.html — работает на любом Apache/nginx без правил rewrite.
     format: 'directory',
