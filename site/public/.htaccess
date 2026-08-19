@@ -39,6 +39,10 @@ ErrorDocument 404 /404.html
   # RewriteCond %{HTTP:X-Forwarded-Proto} !https
   # RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 
+  # Проверка Let's Encrypt при продлении должна доходить по http без редиректов.
+  # Продление идёт каждые 60–90 дней, и молча сломать его легко.
+  RewriteRule ^\.well-known/acme-challenge/ - [L]
+
   # Один канонический адрес: без www. Схема сохраняется через REQUEST_SCHEME,
   # чтобы до выпуска Let's Encrypt не отправлять посетителя на https
   # с самоподписанным сертификатом.
